@@ -9,7 +9,7 @@
 #   4. 每层结束清理 apt lists 与缓存。
 
 # 基础镜像走 docker.io 官方名（由 buildx 的 buildkitd 镜像加速配置拉取，见流水线 BUILDKIT 配置）
-FROM python:3.11-slim
+FROM python:3.11-slim-bookworm
 
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
@@ -26,7 +26,7 @@ WORKDIR /app
 
 # 系统基础包：三个服务保持完全一致的命令，这层才能跨镜像复用
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        curl ca-certificates \
+        curl ca-certificates libatomic1 \
         fonts-dejavu-core fonts-liberation \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
