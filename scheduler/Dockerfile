@@ -53,9 +53,6 @@ RUN python -m playwright install --with-deps chromium \
 # 创建日志目录
 RUN mkdir -p /app/scheduler/logs
 
-# 补齐公共模块 common/utils/email_utils 依赖
-RUN pip install --no-cache-dir "email-validator>=2.1.0"
-
 # 暴露端口
 EXPOSE 8091
 
