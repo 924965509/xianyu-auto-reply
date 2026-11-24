@@ -56,6 +56,9 @@ RUN python -m playwright install --with-deps chromium \
 # 创建目录
 RUN mkdir -p /app/websocket/logs /app/static /app/browser_data
 
+# 补齐公共模块 common/utils/email_utils 依赖
+RUN pip install --no-cache-dir "email-validator>=2.1.0"
+
 # 暴露端口
 EXPOSE 8090
 
