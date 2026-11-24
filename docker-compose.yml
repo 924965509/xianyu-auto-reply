@@ -23,6 +23,8 @@ services:
       - --max-connect-errors=100000
       - --max-allowed-packet=256M
       - --default-time-zone=+08:00
+      - --innodb-buffer-pool-size=${MYSQL_INNODB_BUFFER_POOL_SIZE:-256M}
+      - --performance-schema=${MYSQL_PERFORMANCE_SCHEMA:-OFF}
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -304,7 +306,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - "127.0.0.1:${FRONTEND_PORT:-9000}:80"
+      - "${FRONTEND_BIND_IP:-127.0.0.1}:${FRONTEND_PORT:-9000}:80"
     networks:
       xianyu-network:
         ipv4_address: ${FRONTEND_IPV4_ADDRESS:-172.30.56.10}
