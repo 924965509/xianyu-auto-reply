@@ -56,10 +56,10 @@ export function Login() {
 
   // Load captcha when switching to email-code
   useEffect(() => {
-    if (loginType === 'email-code') {
+    if (loginType === 'email-code' && loginCaptchaEnabled === true) {
       loadCaptcha()
     }
-  }, [loginType])
+  }, [loginType, loginCaptchaEnabled])
 
   // Countdown timer
   useEffect(() => {
@@ -110,7 +110,7 @@ export function Login() {
   }
 
   const handleSendCode = async () => {
-    if (!captchaVerified || !emailForCode || countdown > 0) return
+    if ((loginCaptchaEnabled === true && !captchaVerified) || !emailForCode || countdown > 0) return
 
     try {
       const result = await sendVerificationCode(emailForCode, 'login', sessionId)
@@ -390,32 +390,34 @@ export function Login() {
                   </div>
 
                   {/* Captcha */}
-                  <div className="input-group">
-                    <label className="input-label">图形验证码</label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={captchaCode}
-                        onChange={(e) => setCaptchaCode(e.target.value)}
-                        placeholder="输入验证码"
-                        maxLength={4}
-                        className="input-ios flex-1"
-                        disabled={captchaVerified}
-                      />
-                      <img
-                        src={captchaImage}
-                        alt="验证码"
-                        onClick={loadCaptcha}
-                        className="h-[38px] rounded border border-gray-300 cursor-pointer hover:opacity-80 transition-opacity"
-                      />
+                  {loginCaptchaEnabled === true && (
+                    <div className="input-group">
+                      <label className="input-label">图形验证码</label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={captchaCode}
+                          onChange={(e) => setCaptchaCode(e.target.value)}
+                          placeholder="输入验证码"
+                          maxLength={4}
+                          className="input-ios flex-1"
+                          disabled={captchaVerified}
+                        />
+                        <img
+                          src={captchaImage}
+                          alt="验证码"
+                          onClick={loadCaptcha}
+                          className="h-[38px] rounded border border-gray-300 cursor-pointer hover:opacity-80 transition-opacity"
+                        />
+                      </div>
+                      <p className={cn(
+                        'text-xs',
+                        captchaVerified ? 'text-green-600' : verifying ? 'text-blue-500' : 'text-gray-400'
+                      )}>
+                        {captchaVerified ? '✓ 验证成功' : verifying ? '验证中...' : '点击图片更换验证码'}
+                      </p>
                     </div>
-                    <p className={cn(
-                      'text-xs',
-                      captchaVerified ? 'text-green-600' : verifying ? 'text-blue-500' : 'text-gray-400'
-                    )}>
-                      {captchaVerified ? '✓ 验证成功' : verifying ? '验证中...' : '点击图片更换验证码'}
-                    </p>
-                  </div>
+                  )}
 
                   {/* Email code */}
                   <div className="input-group">
@@ -435,7 +437,7 @@ export function Login() {
                       <button
                         type="button"
                         onClick={handleSendCode}
-                        disabled={!captchaVerified || !emailForCode || countdown > 0}
+                        disabled={(loginCaptchaEnabled === true && !captchaVerified) || !emailForCode || countdown > 0}
                         className="btn-ios-secondary whitespace-nowrap"
                       >
                         {countdown > 0 ? `${countdown}s` : '发送'}

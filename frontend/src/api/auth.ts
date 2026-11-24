@@ -82,9 +82,9 @@ export const getLoginInfoStatus = async (): Promise<{ enabled: boolean }> => {
 export const getLoginCaptchaStatus = async (): Promise<{ enabled: boolean }> => {
   const settings = await getPublicSettings()
   const value = settings.login_captcha_enabled
-  // 如果没有设置，默认开启
+  // 如果没有设置，默认关闭
   if (value === undefined || value === null) {
-    return { enabled: true }
+    return { enabled: false }
   }
   return { enabled: value === true || value === 'true' || value === 1 || value === '1' }
 }

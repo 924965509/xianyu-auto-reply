@@ -72,6 +72,7 @@ DEFAULT_SYSTEM_SETTINGS: dict[str, tuple[str, str | None]] = {
     "disclaimer.agree_button_text": ("同意并继续", "免责声明同意按钮文案"),
     "disclaimer.disagree_button_text": ("不同意", "免责声明不同意按钮文案"),
     REGISTRATION_ENABLED_KEY: ("false", "是否允许新用户自助注册（关闭后拒绝注册及注册验证码发送、验证）"),
+    "login_captcha_enabled": ("false", "是否开启登录滑动验证码"),
     "login.system_name": ("闲鱼管理系统", "登录页系统名称"),
     "login.system_title": (DEFAULT_LOGIN_SYSTEM_TITLE, "登录页系统标题"),
     "login.system_description": (DEFAULT_LOGIN_SYSTEM_DESCRIPTION, "登录页系统描述"),

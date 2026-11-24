@@ -113,7 +113,7 @@ async def perform_login(
             if not account or not password:
                 raise LoginRejected('请提供有效的登录信息')
             settings = await settings_loader(session)
-            if settings.get('login_captcha_enabled') in (None, 'true', '1'):
+            if settings.get('login_captcha_enabled') in ('true', '1'):
                 challenge = values.get('geetest_challenge')
                 if not challenge:
                     raise LoginRejected('请完成滑动验证')

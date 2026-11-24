@@ -148,7 +148,7 @@ async def send_email_verification_code(
                 raise CodeRequestRejected("该邮箱已被注册")
         elif request.type == "reset_password":
             settings = await SystemSettingService(db).list_settings()
-            if settings.get("login_captcha_enabled") in (None, "true", "1"):
+            if settings.get("login_captcha_enabled") in ("true", "1"):
                 if not request.geetest_challenge:
                     raise CodeRequestRejected("请完成滑动验证")
                 verified, message = check_geetest_verified(request.geetest_challenge)

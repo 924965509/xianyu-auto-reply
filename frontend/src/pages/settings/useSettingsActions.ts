@@ -77,7 +77,7 @@ export function useSettingsActions(getSettings: SettingsGetter) {
       await persist({
         registration_enabled: Boolean(settings.registration_enabled),
         show_default_login_info: Boolean(settings.show_default_login_info),
-        login_captcha_enabled: Boolean(settings.login_captcha_enabled ?? true),
+        login_captcha_enabled: Boolean(settings.login_captcha_enabled ?? false),
         'log.retention_days': String(value),
         'account.face_verify_timeout_disable': Boolean(settings['account.face_verify_timeout_disable'] ?? true),
       }, '基础设置保存成功', '基础设置保存失败')

@@ -54,7 +54,7 @@ export function BasicSettingsTab({
             <ToggleSetting
               title="登录滑动验证码"
               description="开启后账号密码登录需要完成滑动验证"
-              checked={Boolean(settings?.login_captcha_enabled ?? true)}
+              checked={Boolean(settings?.login_captcha_enabled ?? false)}
               onChange={(checked) => setSettings((current) => current ? { ...current, login_captcha_enabled: checked } : null)}
             />
             <div className="flex min-h-20 items-center justify-between gap-4 border-b border-slate-100 py-3 dark:border-slate-700">
